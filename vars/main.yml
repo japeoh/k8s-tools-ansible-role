@@ -1,0 +1,20 @@
+---
+# vars file for japeoh.k8s-tools
+
+k8s_tools_kubectl_download_dir: "{{ k8s_tools_base_dir }}/kubectl-{{ k8s_tools_kubectl_version }}"
+k8s_tools_kubectl_download_url: "https://storage.googleapis.com/kubernetes-release/release/v{{ k8s_tools_kubectl_version }}/bin/linux/amd64/kubectl"
+k8s_tools_kubectl_binary: "{{ k8s_tools_kubectl_download_dir }}/kubectl"
+k8s_tools_kubectl_install: "{{ k8s_tools_install_dir }}/kubectl"
+k8s_tools_kubectl_version_command: "{{ k8s_tools_kubectl_install }} version --client"
+
+k8s_tools_minikube_download_dir: "{{ k8s_tools_base_dir }}/minikube-{{ k8s_tools_minikube_version }}"
+k8s_tools_minikube_download_url: "https://storage.googleapis.com/minikube/releases/v{{ k8s_tools_minikube_version }}/minikube-linux-amd64"
+k8s_tools_minikube_binary: "{{ k8s_tools_minikube_download_dir }}/minikube-linux-amd64"
+k8s_tools_minikube_install: "{{ k8s_tools_install_dir }}/minikube"
+k8s_tools_minikube_version_command: "{{ k8s_tools_minikube_install }} version"
+
+k8s_tools_kops_download_dir: "{{ k8s_tools_base_dir }}/kops-{{ k8s_tools_kops_version }}"
+k8s_tools_kops_download_url: "https://github.com/kubernetes/kops/releases/download/v{{ k8s_tools_kops_version }}/kops-linux-amd64"
+k8s_tools_kops_binary: "{{ k8s_tools_kops_download_dir }}/kops-linux-amd64"
+k8s_tools_kops_install: "{{ k8s_tools_install_dir }}/kops"
+k8s_tools_kops_version_command: "{{ k8s_tools_kops_install }} version"

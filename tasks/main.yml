@@ -1,0 +1,63 @@
+---
+# tasks file for japeoh.k8s-tools
+
+- name: Create directorys
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+  - "{{ k8s_tools_base_dir }}"
+  - "{{ k8s_tools_install_dir }}"
+  - "{{ k8s_tools_kubectl_download_dir }}"
+  - "{{ k8s_tools_minikube_download_dir }}"
+  - "{{ k8s_tools_kops_download_dir }}"
+
+- name: Install prerequisties
+  yum:
+    name:
+      - qemu-kvm
+      - libvirt
+      - virt-install
+      - libguestfs-tools
+    state: present
+  become: yes
+
+- name: Add user to libvirt group
+  user:
+    name: "{{ ansible_user }}"
+    groups: libvirt
+    append: yes
+  become: yes
+
+- import_tasks: install.yml
+  vars:
+    tool: kubectl
+    tool_url: "{{ k8s_tools_kubectl_download_url }}"
+    tool_dir: "{{ k8s_tools_kubectl_download_dir }}"
+    tool_checksum: "{{ k8s_tools_kubectl_checksum }}"
+    tool_binary: "{{ k8s_tools_kubectl_binary }}"
+    tool_install: "{{ k8s_tools_kubectl_install }}"
+    tool_version_command: "{{ k8s_tools_kubectl_version_command }}"
+    tool_version: "{{ k8s_tools_kubectl_version }}"
+
+- import_tasks: install.yml
+  vars:
+    tool: minikube
+    tool_url: "{{ k8s_tools_minikube_download_url }}"
+    tool_dir: "{{ k8s_tools_minikube_download_dir }}"
+    tool_checksum: "{{ k8s_tools_minikube_checksum }}"
+    tool_binary: "{{ k8s_tools_minikube_binary }}"
+    tool_install: "{{ k8s_tools_minikube_install }}"
+    tool_version_command: "{{ k8s_tools_minikube_version_command }}"
+    tool_version: "{{ k8s_tools_minikube_version }}"
+
+- import_tasks: install.yml
+  vars:
+    tool: kops
+    tool_url: "{{ k8s_tools_kops_download_url }}"
+    tool_dir: "{{ k8s_tools_kops_download_dir }}"
+    tool_checksum: "{{ k8s_tools_kops_checksum }}"
+    tool_binary: "{{ k8s_tools_kops_binary }}"
+    tool_install: "{{ k8s_tools_kops_install }}"
+    tool_version_command: "{{ k8s_tools_kops_version_command }}"
+    tool_version: "{{ k8s_tools_kops_version }}"

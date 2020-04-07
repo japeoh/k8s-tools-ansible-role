@@ -1,0 +1,30 @@
+---
+
+- name: "Download {{  tool }}"
+  get_url:
+    url: "{{ tool_url }}"
+    dest: "{{ tool_dir }}"
+    checksum: "{{ tool_checksum }}"
+    mode: u+rwx
+
+- name: "Install {{  tool }}"
+  file:
+    src: "{{ tool_binary }}"
+    dest: "{{ tool_install }}"
+    state: link
+    force: yes
+  register: tool_install_output
+
+- name: "Execute {{  tool }} version"
+  command: "{{ tool_version_command }}"
+  register: version
+  changed_when: false
+
+- name: "Validate correct {{ tool }} version installed"
+  assert:
+    that: tool_version in version.stdout
+
+- name: "Enable {{  tool }} completion"
+  shell: "{{ tool_install_output.dest }} completion bash > /etc/bash_completion.d/{{ tool }}"
+  become: yes
+  changed_when: false

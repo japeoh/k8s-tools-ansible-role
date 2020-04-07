@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    ansible_user: root # Required to add user to group in containers
+  roles:
+    - japeoh.k8s_tools
